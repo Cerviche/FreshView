@@ -2,3 +2,5 @@
 private/*
 # Intellisense for Visual Studio Code.
 jsconfig.json
+.vscode/
+*.zip

@@ -77,9 +77,9 @@ function extractGridVideos(element) {
         element,
         // Videos in the HOME tab of a channel
         "ytd-grid-video-renderer.style-scope.yt-horizontal-list-renderer",
-        // Videos in the VIDEOS tab of a channel
-        // Videos on the Library page
+
         // Videos on the Subscriptions page
+        // actually i don't know if this one's used anymore but i'll leave it in just in case
         "ytd-grid-video-renderer.style-scope.ytd-grid-renderer"
     );
 }
@@ -109,8 +109,10 @@ function extractHistoryVideos(element) {
 function extractHomeVideos(element) {
     return extract(
         element,
-        // Videos on the Home page
-        "ytd-rich-item-renderer.style-scope.ytd-rich-grid-renderer"
+        // Videos on the Home page or in the VIDEOS tab of a channel or on the Subscriptions page
+        "ytd-rich-item-renderer.style-scope.ytd-rich-grid-renderer",
+        // Videos on the Library/You page
+        "ytd-rich-item-renderer.style-scope.ytd-rich-shelf-renderer",
     );
 }
 
