@@ -10,7 +10,7 @@
  * @returns {boolean} - True iff the given element and path describe a channel page.
  */
 function isChannelPage(element, _) {
-    return element.querySelector("ytd-browse[page-subtype=channels]:not([hidden]) #channel-container") !== null;
+    return element.querySelector("ytd-browse[page-subtype=channels]:not([hidden]) #channel-name") !== null;
 }
 
 /**
@@ -36,14 +36,14 @@ function isExplorePage(_, path) {
 }
 
 /**
- * Reports whether the given YouTube page description matches the Library page.
+ * Reports whether the given YouTube page description matches the Library/You page.
  * 
  * @param {Element} _ - HTML element representing the YouTube page.
  * @param {string} path - Path and query components of the YouTube page URL.
- * @returns {boolean} - True iff the given element and path describe the Library page.
+ * @returns {boolean} - True iff the given element and path describe the Library/You page.
  */
 function isLibraryPage(_, path) {
-    return new RegExp("/feed/library").test(path);
+    return new RegExp("/feed/library").test(path) || new RegExp("/feed/you").test(path);
 }
 
 /**
