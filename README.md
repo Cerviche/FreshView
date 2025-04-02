@@ -12,7 +12,7 @@ FreshView for YouTube™ is a Chrome and Firefox extension that hides watched Yo
 
 ## Installation
 
-[Install for Firefox](https://addons.mozilla.org/en-CA/firefox/addon/re-freshview-for-youtube/)
+[Install for Firefox](https://addons.mozilla.org/en-CA/firefox/addon/re-freshview-for-youtube/)  
 Install for Chrome: Follow manual instructions below
 
 <!-- The easiest way to install this extension is to follow the instructions on the
