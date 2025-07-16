@@ -145,7 +145,7 @@ function extractRecommendedVideos(element) {
     return extract(
         element,
         // Videos in the recommendation sidebar
-        "ytd-compact-video-renderer.style-scope.ytd-item-section-renderer"
+        "yt-lockup-view-model.ytd-item-section-renderer.lockup"
     );
 }
 

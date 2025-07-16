@@ -22,7 +22,8 @@ class Video {
             ":scope a#video-title-link.yt-simple-endpoint.style-scope.ytd-rich-grid-media", // Home
             ":scope a.yt-simple-endpoint.style-scope.ytd-playlist-video-renderer",          // Playlist page
             ":scope a.yt-simple-endpoint.style-scope.ytd-playlist-panel-video-renderer",    // Playlist panel
-            ":scope a.yt-simple-endpoint.style-scope.ytd-compact-video-renderer",           // Recommendations
+            ":scope a.yt-lockup-metadata-view-model-wiz__title",                            // Recommendations
+            ":scope a.yt-simple-endpoint.style-scope.ytd-compact-video-renderer",           // Recommendations (OLD, possibly no longer needed)
             ":scope a#video-title.yt-simple-endpoint.style-scope.ytd-video-renderer",       // Search
         ].join(", ");
 
@@ -95,8 +96,14 @@ class Video {
 
     // Returns the view state of this Video.
     getViewed(threshold) {
+        // List of selectors that could match progress bar associated with this Video.
+        const selectors = [
+            "div.ytThumbnailOverlayProgressBarHostWatchedProgressBarSegment",           // Recommendations
+            "div#progress.style-scope.ytd-thumbnail-overlay-resume-playback-renderer",  // everywhere else
+        ].join(", ");
+
         // Find the progress bar tag associated with this Video.
-        const bar = this.element.querySelector("div#progress.style-scope.ytd-thumbnail-overlay-resume-playback-renderer");
+        const bar = this.element.querySelector(selectors);
         if (bar === null) {
             Logger.debug("Video.fetchViewed(): failed to find bar element for Video", this.element, ".");
             return undefined;
