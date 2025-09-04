@@ -19,12 +19,17 @@ class Video {
         // List of selectors that could match hyperlink tags associated with this Video.
         const selectors = [
             ":scope a#video-title.yt-simple-endpoint.style-scope.ytd-grid-video-renderer",  // Grid
-            ":scope a#video-title-link.yt-simple-endpoint.style-scope.ytd-rich-grid-media", // Home
+            ":scope a#video-title-link.yt-simple-endpoint.style-scope.ytd-rich-grid-media", // Home (OLD)
             ":scope a.yt-simple-endpoint.style-scope.ytd-playlist-video-renderer",          // Playlist page
             ":scope a.yt-simple-endpoint.style-scope.ytd-playlist-panel-video-renderer",    // Playlist panel
             ":scope a.yt-lockup-metadata-view-model-wiz__title",                            // Recommendations
             ":scope a.yt-simple-endpoint.style-scope.ytd-compact-video-renderer",           // Recommendations (OLD, possibly no longer needed)
             ":scope a#video-title.yt-simple-endpoint.style-scope.ytd-video-renderer",       // Search
+
+            // NEW: YouTube homepage (yt-lockup-view-model)
+            ":scope a.yt-lockup-view-model__title",
+            // NEW fallback: homepage thumbnail link
+            ":scope a.yt-lockup-view-model__content-image",
         ].join(", ");
 
         // Find a hyperlink tag associated with this Video.
@@ -35,7 +40,6 @@ class Video {
         }
 
         // Extract the relative Video URL from the YouTube URL.
-        // TODO: Use a positive lookbehind assertion instead of a capture group.
         const regex = /v=([a-zA-Z0-9_\-]+)/;
         const href = hyperlink.getAttribute("href");
         const matches = href.match(regex);
@@ -49,14 +53,11 @@ class Video {
     // Returns a hierarchical path to the HTML element associated with this Video.
     derivePath() {
         let path = "/";
-        // Iterate from the HTML node associated with this Video to the root HTML node.
         for (let node = this.element; node.id !== undefined; node = node.parentNode) {
-            // The current HTML node can be identified relative to its parent HTML node by its NodeList index.
             let index = 0;
             for (let sib = node.previousSibling; sib !== null; sib = sib.previousSibling) {
                 ++index;
             }
-            // Prepend the index to the hierarchical path.
             path = "/" + index + path;
         }
         return path;
@@ -78,14 +79,25 @@ class Video {
 
     // Fetches the title of this Video.
     fetchTitle() {
-        // Find the title tag associated with this Video.
-        const title = this.element.querySelector(":scope #video-title[title]");
+        // OLD: Grid, Search, etc.
+        // const title = this.element.querySelector(":scope #video-title[title]");
+
+        // NEW: try old selector first, then homepage lockup title
+        let title = this.element.querySelector(":scope #video-title[title]");
+        if (!title) {
+            title = this.element.querySelector(":scope a.yt-lockup-view-model__title");
+        }
+
         if (title === null) {
             Logger.warning("Video.fetchTitle(): failed to find title element for Video", this.element, ".");
             return undefined;
         }
 
-        this.title = title.getAttribute("title");
+        // OLD: attribute only
+        // this.title = title.getAttribute("title");
+
+        // NEW: prefer attribute, fallback to text
+        this.title = title.getAttribute("title") || title.textContent.trim();
         return this.title;
     }
 
@@ -96,20 +108,17 @@ class Video {
 
     // Returns the view state of this Video.
     getViewed(threshold) {
-        // List of selectors that could match progress bar associated with this Video.
         const selectors = [
             "div.ytThumbnailOverlayProgressBarHostWatchedProgressBarSegment",           // Recommendations
             "div#progress.style-scope.ytd-thumbnail-overlay-resume-playback-renderer",  // everywhere else
         ].join(", ");
 
-        // Find the progress bar tag associated with this Video.
         const bar = this.element.querySelector(selectors);
         if (bar === null) {
             Logger.debug("Video.fetchViewed(): failed to find bar element for Video", this.element, ".");
             return undefined;
         }
 
-        // Determine whether the Video's progress surpasses the progress threshold.
         const width = bar.style.width.slice(0, -1);
         const progress = parseInt(width, 10);
         this.viewed = progress >= threshold;
@@ -118,12 +127,10 @@ class Video {
 
     // -------------------------------------------------------------------------
 
-    // Hides this Video.
     hide() {
         this.element.style.display = "none";
     }
 
-    // Shows this Video.
     show() {
         this.element.style.display = this.display;
     }
