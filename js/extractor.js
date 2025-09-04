@@ -109,8 +109,12 @@ function extractHistoryVideos(element) {
 function extractHomeVideos(element) {
     return extract(
         element,
-        // Videos on the Home page or in the VIDEOS tab of a channel or on the Subscriptions page
-        "ytd-rich-item-renderer.style-scope.ytd-rich-grid-renderer",
+        // OLD: Videos on the Home page or in the VIDEOS tab of a channel or on the Subscriptions page
+        // "ytd-rich-item-renderer.style-scope.ytd-rich-grid-renderer",
+
+        // NEW: Updated homepage structure uses yt-lockup-view-model inside ytd-rich-item-renderer
+        "yt-lockup-view-model.ytd-rich-item-renderer.lockup",
+
         // Videos on the Library/You page
         "ytd-rich-item-renderer.style-scope.ytd-rich-shelf-renderer",
     );
