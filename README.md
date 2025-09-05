@@ -30,7 +30,7 @@ refer to the instructions below.
 4. Select the [`manifest.json`](manifest.json) file from the cloned repository.
 
 ## Support
-Please support the original from lozog:
+Please see support from the original code from lozog:
 * Source Code: https://github.com/lozog/FreshView
 
 If you are having problems or would like to suggest a feature, please create an
