@@ -61,7 +61,9 @@ class Extractor {
     return extract(
         element,
         // Videos on the Explore page
-        "ytd-video-renderer.style-scope.ytd-expanded-shelf-contents-renderer"
+        "ytd-video-renderer.style-scope.ytd-expanded-shelf-contents-renderer",
+        // NEW: Updated structure uses yt-lockup-view-model inside ytd-rich-item-renderer
+        "yt-lockup-view-model.ytd-rich-item-renderer.lockup"
     );
 }
 
@@ -77,7 +79,8 @@ function extractGridVideos(element) {
         element,
         // Videos in the HOME tab of a channel
         "ytd-grid-video-renderer.style-scope.yt-horizontal-list-renderer",
-
+        // NEW: Updated structure uses yt-lockup-view-model inside ytd-rich-item-renderer
+        "yt-lockup-view-model.ytd-rich-item-renderer.lockup",
         // Videos on the Subscriptions page
         // actually i don't know if this one's used anymore but i'll leave it in just in case
         "ytd-grid-video-renderer.style-scope.ytd-grid-renderer"
@@ -95,7 +98,9 @@ function extractHistoryVideos(element) {
     return extract(
         element,
         // Videos on the History page
-        "ytd-video-renderer.style-scope.ytd-item-section-renderer[is-history]"
+        "ytd-video-renderer.style-scope.ytd-item-section-renderer[is-history]",
+        // NEW: Updated structure uses yt-lockup-view-model inside ytd-rich-item-renderer
+        "yt-lockup-view-model.ytd-rich-item-renderer.lockup"
     );
 }
 
@@ -110,13 +115,11 @@ function extractHomeVideos(element) {
     return extract(
         element,
         // OLD: Videos on the Home page or in the VIDEOS tab of a channel or on the Subscriptions page
-        // "ytd-rich-item-renderer.style-scope.ytd-rich-grid-renderer",
-
+        "ytd-rich-item-renderer.style-scope.ytd-rich-grid-renderer",
         // NEW: Updated homepage structure uses yt-lockup-view-model inside ytd-rich-item-renderer
         "yt-lockup-view-model.ytd-rich-item-renderer.lockup",
-
         // Videos on the Library/You page
-        "ytd-rich-item-renderer.style-scope.ytd-rich-shelf-renderer",
+        "ytd-rich-item-renderer.style-scope.ytd-rich-shelf-renderer"
     );
 }
 
@@ -133,7 +136,9 @@ function extractPlaylistVideos(element) {
         // Videos on a playlist page
         "ytd-playlist-video-renderer.style-scope.ytd-playlist-video-list-renderer",
         // Videos in a playlist panel
-        "ytd-playlist-panel-video-renderer.style-scope.ytd-playlist-panel-renderer"
+        "ytd-playlist-panel-video-renderer.style-scope.ytd-playlist-panel-renderer",
+        // NEW: Updated structure uses yt-lockup-view-model inside ytd-rich-item-renderer
+        "yt-lockup-view-model.ytd-rich-item-renderer.lockup"
     );
 }
 
@@ -149,7 +154,9 @@ function extractRecommendedVideos(element) {
     return extract(
         element,
         // Videos in the recommendation sidebar
-        "yt-lockup-view-model.ytd-item-section-renderer.lockup"
+        "yt-lockup-view-model.ytd-item-section-renderer.lockup",
+        // NEW: Updated structure uses yt-lockup-view-model inside ytd-rich-item-renderer
+        "yt-lockup-view-model.ytd-rich-item-renderer.lockup"
     );
 }
 
@@ -166,7 +173,9 @@ function extractSearchVideos(element) {
         // Videos in a search result that are under a heading
         "ytd-video-renderer.style-scope.ytd-vertical-list-renderer",
         // Videos in a search result that are NOT under a heading
-        "ytd-video-renderer.style-scope.ytd-item-section-renderer:not([is-history])"
+        "ytd-video-renderer.style-scope.ytd-item-section-renderer:not([is-history])",
+        // NEW: Updated structure uses yt-lockup-view-model inside ytd-rich-item-renderer
+        "yt-lockup-view-model.ytd-rich-item-renderer.lockup"
     );
 }
 
