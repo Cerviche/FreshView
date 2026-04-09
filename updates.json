@@ -1,6 +1,6 @@
 {
   "addons": {
-    "newfreshview@cerviche.github.io": {
+    "https://github.com/Cerviche/FreshView": {
       "updates": [
         {
           "version": "2.1.42",
