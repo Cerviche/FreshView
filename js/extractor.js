@@ -138,7 +138,7 @@ function extractPlaylistVideos(element) {
         "ytd-playlist-video-renderer.style-scope.ytd-playlist-video-list-renderer",
         // OLD FALLBACK: just the tag name
         "ytd-playlist-video-renderer",
-        // NEW: The 2024+ YouTube redesign uses yt-lockup-view-model for playlists too
+        // NEW: The 2026+ YouTube redesign uses yt-lockup-view-model for playlists too
         "yt-lockup-view-model.ytLockupViewModelWrapper",
         // NEW FALLBACK: just the tag name
         "yt-lockup-view-model",
