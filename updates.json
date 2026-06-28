@@ -1,4 +1,4 @@
-{
+{{
   "addons": {
     "https://github.com/Cerviche/FreshView": {
       "updates": [
@@ -9,6 +9,10 @@
         {
           "version": "2.2.0",
           "update_link": "https://github.com/Cerviche/FreshView/releases/download/v2.2.0/freshview-2.2.0.xpi"
+        },
+        {
+          "version": "2.3.0",
+          "update_link": "https://github.com/Cerviche/FreshView/releases/download/v2.3.0/freshview-2.3.0.xpi"
         }
       ]
     }
