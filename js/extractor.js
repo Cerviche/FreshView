@@ -57,13 +57,14 @@ class Extractor {
  *
  * @return {Element[]} - List of HTML explore video elements.
  */
- function extractExploreVideos(element) {
+function extractExploreVideos(element) {
     return extract(
         element,
-        // Videos on the Explore page
         "ytd-video-renderer.style-scope.ytd-expanded-shelf-contents-renderer",
-        // NEW: Updated structure uses yt-lockup-view-model inside ytd-rich-item-renderer
-        "yt-lockup-view-model.ytd-rich-item-renderer.lockup"
+        "ytd-video-renderer",
+        "yt-lockup-view-model.ytLockupViewModelWrapper",
+        "yt-lockup-view-model",
+        "ytd-rich-item-renderer"
     );
 }
 
@@ -77,13 +78,12 @@ class Extractor {
 function extractGridVideos(element) {
     return extract(
         element,
-        // Videos in the HOME tab of a channel
         "ytd-grid-video-renderer.style-scope.yt-horizontal-list-renderer",
-        // NEW: Updated structure uses yt-lockup-view-model inside ytd-rich-item-renderer
-        "yt-lockup-view-model.ytd-rich-item-renderer.lockup",
-        // Videos on the Subscriptions page
-        // actually i don't know if this one's used anymore but i'll leave it in just in case
-        "ytd-grid-video-renderer.style-scope.ytd-grid-renderer"
+        "ytd-grid-video-renderer",
+        "yt-lockup-view-model.ytLockupViewModelWrapper",
+        "yt-lockup-view-model",
+        "ytd-grid-video-renderer.style-scope.ytd-grid-renderer",
+        "ytd-rich-item-renderer"
     );
 }
 
@@ -97,10 +97,11 @@ function extractGridVideos(element) {
 function extractHistoryVideos(element) {
     return extract(
         element,
-        // Videos on the History page
         "ytd-video-renderer.style-scope.ytd-item-section-renderer[is-history]",
-        // NEW: Updated structure uses yt-lockup-view-model inside ytd-rich-item-renderer
-        "yt-lockup-view-model.ytd-rich-item-renderer.lockup"
+        "ytd-video-renderer",
+        "yt-lockup-view-model.ytLockupViewModelWrapper",
+        "yt-lockup-view-model",
+        "ytd-rich-item-renderer"
     );
 }
 
@@ -114,12 +115,12 @@ function extractHistoryVideos(element) {
 function extractHomeVideos(element) {
     return extract(
         element,
-        // OLD: Videos on the Home page or in the VIDEOS tab of a channel or on the Subscriptions page
         "ytd-rich-item-renderer.style-scope.ytd-rich-grid-renderer",
-        // NEW: Updated homepage structure uses yt-lockup-view-model inside ytd-rich-item-renderer
-        "yt-lockup-view-model.ytd-rich-item-renderer.lockup",
-        // Videos on the Library/You page
-        "ytd-rich-item-renderer.style-scope.ytd-rich-shelf-renderer"
+        "ytd-rich-item-renderer",
+        "yt-lockup-view-model.ytLockupViewModelWrapper",
+        "yt-lockup-view-model",
+        "ytd-rich-item-renderer.style-scope.ytd-rich-shelf-renderer",
+        "ytd-video-renderer"
     );
 }
 
@@ -133,15 +134,21 @@ function extractHomeVideos(element) {
 function extractPlaylistVideos(element) {
     return extract(
         element,
-        // Videos on a playlist page
+        // OLD: Videos on a playlist page
         "ytd-playlist-video-renderer.style-scope.ytd-playlist-video-list-renderer",
-        // Videos in a playlist panel
+        // OLD FALLBACK: just the tag name
+        "ytd-playlist-video-renderer",
+        // NEW: The 2024+ YouTube redesign uses yt-lockup-view-model for playlists too
+        "yt-lockup-view-model.ytLockupViewModelWrapper",
+        // NEW FALLBACK: just the tag name
+        "yt-lockup-view-model",
+        // Videos in a playlist panel (sidebar)
         "ytd-playlist-panel-video-renderer.style-scope.ytd-playlist-panel-renderer",
-        // NEW: Updated structure uses yt-lockup-view-model inside ytd-rich-item-renderer
-        "yt-lockup-view-model.ytd-rich-item-renderer.lockup"
+        "ytd-playlist-panel-video-renderer",
+        // Generic fallback for any video-like element
+        "ytd-rich-item-renderer"
     );
 }
-
 
 /**
  * Extracts all the recommended videos in the given HTML element.
@@ -153,10 +160,11 @@ function extractPlaylistVideos(element) {
 function extractRecommendedVideos(element) {
     return extract(
         element,
-        // Videos in the recommendation sidebar
         "yt-lockup-view-model.ytd-item-section-renderer.lockup",
-        // NEW: Updated structure uses yt-lockup-view-model inside ytd-rich-item-renderer
-        "yt-lockup-view-model.ytd-rich-item-renderer.lockup"
+        "yt-lockup-view-model.ytLockupViewModelWrapper",
+        "yt-lockup-view-model",
+        "ytd-compact-video-renderer",
+        "ytd-video-renderer"
     );
 }
 
@@ -170,12 +178,12 @@ function extractRecommendedVideos(element) {
 function extractSearchVideos(element) {
     return extract(
         element,
-        // Videos in a search result that are under a heading
         "ytd-video-renderer.style-scope.ytd-vertical-list-renderer",
-        // Videos in a search result that are NOT under a heading
         "ytd-video-renderer.style-scope.ytd-item-section-renderer:not([is-history])",
-        // NEW: Updated structure uses yt-lockup-view-model inside ytd-rich-item-renderer
-        "yt-lockup-view-model.ytd-rich-item-renderer.lockup"
+                   "ytd-video-renderer",
+                   "yt-lockup-view-model.ytLockupViewModelWrapper",
+                   "yt-lockup-view-model",
+                   "ytd-rich-item-renderer"
     );
 }
 
@@ -190,5 +198,15 @@ function extractSearchVideos(element) {
  * @return {Element[]} - List of HTML video elements.
  */
 function extract(element, ...selectors) {
-    return [].concat(...selectors.map(selector => Array.from(element.querySelectorAll(`:scope ${selector}`))));
+    // Use a Set to deduplicate elements
+    const elements = new Set();
+
+    for (const selector of selectors) {
+        const matches = element.querySelectorAll(`:scope ${selector}`);
+        for (const match of matches) {
+            elements.add(match);
+        }
+    }
+
+    return Array.from(elements);
 }
