@@ -4,7 +4,7 @@
     "name": "FreshView for YouTube™",
     "short_name": "FreshView for YouTube™",
     "description": "Hide YouTube™ videos you've already watched to easily discover fresh content.",
-    "version": "2.2.0",
+    "version": "2.3.0",
 
     "background": {
         "scripts": [
@@ -72,10 +72,10 @@
         "tabs"
     ],
 
-"applications": {
-  "gecko": {
-    "id": "freshview@cerviche.github.io",
-    "update_url": "https://cerviche.github.io/FreshView/updates.json"
-  }
-}
+    "applications": {
+        "gecko": {
+            "id": "freshview@cerviche.github.io",
+            "update_url": "https://cerviche.github.io/FreshView/updates.json"
+        }
+    }
 }
