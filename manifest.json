@@ -72,10 +72,12 @@
         "tabs"
     ],
 
-    "applications": {
+    "browser_specific_settings": {
         "gecko": {
-            "id": "freshview@cerviche.github.io",
-            "update_url": "https://cerviche.github.io/FreshView/updates.json"
+            "id": "newfreshview@cerviche.github.io",
+            "data_collection_permissions": {
+                "required": ["none"]
+            }
         }
     }
 }
