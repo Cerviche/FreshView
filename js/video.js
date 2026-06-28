@@ -19,7 +19,7 @@ class Video {
         // List of selectors that could match hyperlink tags associated with this Video.
         // These cover different YouTube page layouts (grid, search, playlists, etc.)
         const selectors = [
-            // NEW: 2024+ YouTube redesign using yt-lockup-view-model
+            // NEW: 2026+ YouTube redesign using yt-lockup-view-model
             // The title link uses ytLockupMetadataViewModelTitle class
             "a.ytLockupMetadataViewModelTitle",
 
@@ -32,7 +32,7 @@ class Video {
             // Grid layout (channel video tabs, subscriptions page)
             "a#video-title.yt-simple-endpoint.style-scope.ytd-grid-video-renderer",
 
-            // Old homepage layout (pre-2024)
+            // Old homepage layout (pre-2026)
             "a#video-title-link.yt-simple-endpoint.style-scope.ytd-rich-grid-media",
 
             // Playlist page layout (the link does NOT have the ytd-playlist-video-renderer class)
@@ -116,7 +116,7 @@ class Video {
 
         // Try selectors in order of specificity
 
-        // NEW: 2024+ YouTube redesign using yt-lockup-view-model
+        // NEW: 2026+ YouTube redesign using yt-lockup-view-model
         // The title is inside a span within the link
         title = this.element.querySelector(":scope a.ytLockupMetadataViewModelTitle span");
 
@@ -185,7 +185,7 @@ class Video {
         // Selectors for finding the progress/watched bar element
         // Order matters: try most specific/newest first
         const selectors = [
-            // NEW: 2024+ YouTube redesign (yt-lockup-view-model)
+            // NEW: 2026+ YouTube redesign (yt-lockup-view-model)
             // The progress bar segment that shows watch percentage
             "yt-thumbnail-overlay-progress-bar-view-model .ytThumbnailOverlayProgressBarHostWatchedProgressBarSegment",
 
